@@ -42,10 +42,10 @@ Exemplo de saída esperada
 ----------------
     Vendedor                Comissão
     ----------------------------------
-    João Silva              R$ 214,38
-    Maria Souza             R$ 890,12
-    Carlos Oliveira         R$ 186,00
-    Ana Lima                R$ 104,58
+    João Silva              R$ 495,68
+    Maria Souza             R$ 465,95
+    Carlos Oliveira         R$ 379,37
+    Ana Lima                R$ 404,98
 """
 import json
 from collections import defaultdict
