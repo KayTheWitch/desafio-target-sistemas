@@ -4,7 +4,7 @@ Repositório para desenvolver três exercícios de lógica em Python: comissão 
 
 ## Status
 
-Em preparação. Este repositório contém o planejamento e a documentação inicial; as soluções ainda serão implementadas. As instruções de execução e os exemplos de uso serão adicionados junto com cada exercício.
+Em polimento final. Todos os módulos já foram escritos de acordo com os requisitos do desafio, qualquer mudança à partir desse ponto é só refinamento
 
 ## Exercícios
 
@@ -32,47 +32,37 @@ Cada movimentação deve ter:
 
 Ao concluir cada movimentação, retornar a quantidade final em estoque do produto movimentado.
 
-**Pontos a definir durante a implementação:** validação das quantidades, tratamento de produto inexistente, saída maior que o saldo disponível e alcance da unicidade dos identificadores. Essas escolhas serão documentadas aqui, sem apresentá-las como exigências adicionais do enunciado.
-
 ### 3. Encargos por atraso
 
 Receber um valor e uma data de vencimento e calcular o encargo na data atual, considerando a taxa de 2,5% ao dia indicada no desafio.
 
 **Interpretação planejada:** o enunciado usa os termos "juros" e "multa" para o mesmo cálculo. A solução tratará a taxa como um único encargo diário de 2,5%, sem somar uma segunda multa.
 
-O enunciado não define capitalização simples ou composta, contagem dos dias nem comportamento no vencimento ou antes dele. Essas regras ainda precisam ser definidas e documentadas antes da implementação, ou confirmadas com a equipe responsável pelo desafio.
 
 ## Tecnologia
 
-Python é a linguagem escolhida para as soluções. O enunciado não exige uma linguagem, framework, banco de dados ou tipo de interface específico.
+Python foi a linguagem escolhida para as soluções. O enunciado não exige uma linguagem, framework, banco de dados ou tipo de interface específico, logo me dei a liberdade de escolher a linguagem que tenho mais proximidade no momento.
 
 ## Estrutura planejada
 
-A árvore abaixo representa a organização proposta, não arquivos já implementados:
+A árvore abaixo representa a organização já finalizada dos arquivos:
 
 ```text
 desafio-target-sistemas/
 ├── README.md
 ├── exercicio_01_comissoes/
-│   ├── main.py
-│   └── vendas.json
+│   ├── exercicio1_comissoes.py
+│   ├── vendas.json
+│   └── test_exercicio1_comissoes
 ├── exercicio_02_estoque/
-│   ├── main.py
-│   └── estoque.json
-├── exercicio_03_encargos/
-│   └── main.py
-└── tests/
+│   ├── exercicio2_estoque.py
+│   ├── estoque.json
+│   └── test_exercicio2_estoque.py
+└── exercicio_03_encargos/
+    ├── exercicio3_juros
+    └── test_exercicio3_juros
+
 ```
-
-Cada exercício terá sua própria entrada de execução. Os dados de exemplo e os testes serão adicionados durante o desenvolvimento.
-
-## Plano de desenvolvimento
-
-- [ ] Implementar o cálculo por venda e a totalização por vendedor.
-- [ ] Implementar entradas e saídas de estoque com identificação das movimentações.
-- [ ] Definir as regras pendentes e implementar o cálculo de encargos.
-- [ ] Adicionar testes para os limites de comissão, movimentações e datas.
-- [ ] Documentar entradas, saídas, decisões e comandos de execução.
 
 ## Foco do projeto
 
