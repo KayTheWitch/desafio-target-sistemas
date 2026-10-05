@@ -36,8 +36,8 @@ Como executar
 -------------
     python -m unittest test_exercicio3_juros -v
 
-    # todos os testes do projeto de uma vez:
-    python -m unittest discover -v
+    # discovery dos testes deste exercício, a partir da raiz do repositório:
+    python -m unittest discover -s exercicio_03_encargos -v
 
     # opcional, se o pytest estiver instalado:
     pytest -v
@@ -97,6 +97,13 @@ class TestCalcularJuros(unittest.TestCase):
         """Vencimento no futuro (dias negativos) nunca gera juros nem valor negativo."""
         juros = ex3.calcular_juros(D("1000"), date(2026, 10, 20), hoje=date(2026, 10, 4))
         self.assertEqual(juros, D("0.00"))
+
+    def test_rejeita_valor_negativo_e_nao_finito(self):
+        """Valores negativos, NaN e Infinity são rejeitados antes do cálculo."""
+        for valor in (D("-100"), D("NaN"), D("Infinity")):
+            with self.subTest(valor=valor):
+                with self.assertRaisesRegex(ValueError, "finito e não negativo"):
+                    ex3.calcular_juros(valor, date(2026, 9, 30), hoje=date(2026, 10, 4))
 
     def test_juros_crescem_linearmente_com_os_dias(self):
         """Juros simples: dobrar os dias dobra os juros (não há "juros sobre juros")."""
@@ -194,6 +201,13 @@ class TestLerValor(unittest.TestCase):
                 with self.assertRaises(InvalidOperation):
                     ex3.ler_valor(texto)
 
+    def test_rejeita_valor_negativo_e_nao_finito(self):
+        """O valor digitado precisa ser finito e não negativo."""
+        for texto in ("-100", "NaN", "Infinity"):
+            with self.subTest(texto=texto):
+                with self.assertRaisesRegex(ValueError, "finito e não negativo"):
+                    ex3.ler_valor(texto)
+
 
 class TestBrl(unittest.TestCase):
     """Formatação de valores no padrão monetário brasileiro."""
@@ -264,6 +278,13 @@ class TestMain(unittest.TestCase):
     def test_valor_invalido_gera_erro(self):
         with self.assertRaises(InvalidOperation):
             self.executar("abc", "30/09/2026")
+
+    def test_valores_negativos_e_nao_finitos_mostram_erro_amigavel(self):
+        for valor in ("-100", "NaN", "Infinity"):
+            with self.subTest(valor=valor):
+                saida = self.executar(valor, "30/09/2026")
+                self.assertIn("Erro: O valor deve ser finito e não negativo.", saida)
+                self.assertNotIn("Traceback", saida)
 
 
 if __name__ == "__main__":
