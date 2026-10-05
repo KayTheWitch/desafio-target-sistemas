@@ -40,8 +40,8 @@ Como executar
 -------------
     python -m unittest test_exercicio1_comissoes -v
 
-    # todos os testes do projeto de uma vez:
-    python -m unittest discover -v
+    # discovery dos testes deste exercício, a partir da raiz do repositório:
+    python -m unittest discover -s exercicio_01_comissoes -v
 
     # opcional, se o pytest estiver instalado:
     pytest -v
