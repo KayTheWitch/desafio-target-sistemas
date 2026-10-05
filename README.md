@@ -4,7 +4,7 @@ Repositório para desenvolver três exercícios de lógica em Python: comissão 
 
 ## Status
 
-Em preparação. Este repositório contém o planejamento e a documentação inicial; as soluções ainda serão implementadas. As instruções de execução e os exemplos de uso serão adicionados junto com cada exercício.
+Em polimento final. Todos os módulos já foram escritos de acordo com os requisitos do desafio, qualquer mudança à partir desse ponto é só refinamento
 
 ## Exercícios
 
@@ -18,7 +18,7 @@ Ler um JSON de vendas, com os campos `vendedor` e `valor`, e calcular a comissã
 | De R$ 100,00 até menos de R$ 500,00 | 1% |
 | A partir de R$ 500,00 | 5% |
 
-**Interpretação planejada:** calcular a comissão individual de cada venda e somar as comissões por vendedor. A faixa será aplicada a cada venda, não ao total vendido pelo vendedor.
+**Decisão adotada:** calcular a comissão individual de cada venda e somar as comissões por vendedor. A faixa é aplicada a cada venda, não ao total vendido pelo vendedor.
 
 ### 2. Movimentação de estoque
 
@@ -32,47 +32,57 @@ Cada movimentação deve ter:
 
 Ao concluir cada movimentação, retornar a quantidade final em estoque do produto movimentado.
 
-**Pontos a definir durante a implementação:** validação das quantidades, tratamento de produto inexistente, saída maior que o saldo disponível e alcance da unicidade dos identificadores. Essas escolhas serão documentadas aqui, sem apresentá-las como exigências adicionais do enunciado.
-
 ### 3. Encargos por atraso
 
 Receber um valor e uma data de vencimento e calcular o encargo na data atual, considerando a taxa de 2,5% ao dia indicada no desafio.
 
-**Interpretação planejada:** o enunciado usa os termos "juros" e "multa" para o mesmo cálculo. A solução tratará a taxa como um único encargo diário de 2,5%, sem somar uma segunda multa.
+**Decisões adotadas:** o enunciado usa os termos "juros" e "multa" para o mesmo cálculo. A solução trata a taxa como um único encargo diário de 2,5%, sem somar uma segunda multa. Os juros são simples (calculados sobre o valor original), contam dias corridos e são zero quando o vencimento é hoje ou no futuro.
 
-O enunciado não define capitalização simples ou composta, contagem dos dias nem comportamento no vencimento ou antes dele. Essas regras ainda precisam ser definidas e documentadas antes da implementação, ou confirmadas com a equipe responsável pelo desafio.
 
 ## Tecnologia
 
-Python é a linguagem escolhida para as soluções. O enunciado não exige uma linguagem, framework, banco de dados ou tipo de interface específico.
+Python 3.10 ou superior foi escolhido para as soluções. O enunciado não exige uma linguagem, framework, banco de dados ou tipo de interface específico, logo me dei a liberdade de escolher a linguagem que tenho mais proximidade no momento.
+
+## Execução
+
+Execute os scripts a partir da raiz do repositório:
+
+```bash
+python exercicio_01_comissoes/exercicio1_comissoes.py
+python exercicio_02_estoque/exercicio2_estoque.py
+python exercicio_03_encargos/exercicio3_juros.py
+```
+
+## Testes
+
+Execute cada conjunto de testes a partir da raiz. O discovery é indicado por pasta:
+
+```bash
+python -m unittest discover -s exercicio_01_comissoes -v
+python -m unittest discover -s exercicio_02_estoque -v
+python -m unittest discover -s exercicio_03_encargos -v
+```
 
 ## Estrutura planejada
 
-A árvore abaixo representa a organização proposta, não arquivos já implementados:
+A árvore abaixo representa a organização já finalizada dos arquivos:
 
 ```text
 desafio-target-sistemas/
 ├── README.md
 ├── exercicio_01_comissoes/
-│   ├── main.py
-│   └── vendas.json
+│   ├── exercicio1_comissoes.py
+│   ├── vendas.json
+│   └── test_exercicio1_comissoes.py
 ├── exercicio_02_estoque/
-│   ├── main.py
-│   └── estoque.json
-├── exercicio_03_encargos/
-│   └── main.py
-└── tests/
+│   ├── exercicio2_estoque.py
+│   ├── estoque.json
+│   └── test_exercicio2_estoque.py
+└── exercicio_03_encargos/
+    ├── exercicio3_juros.py
+    └── test_exercicio3_juros.py
+
 ```
-
-Cada exercício terá sua própria entrada de execução. Os dados de exemplo e os testes serão adicionados durante o desenvolvimento.
-
-## Plano de desenvolvimento
-
-- [ ] Implementar o cálculo por venda e a totalização por vendedor.
-- [ ] Implementar entradas e saídas de estoque com identificação das movimentações.
-- [ ] Definir as regras pendentes e implementar o cálculo de encargos.
-- [ ] Adicionar testes para os limites de comissão, movimentações e datas.
-- [ ] Documentar entradas, saídas, decisões e comandos de execução.
 
 ## Foco do projeto
 
