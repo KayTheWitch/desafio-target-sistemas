@@ -46,6 +46,12 @@ TAXA_DIARIA = Decimal("0.025")
 CENTAVOS = Decimal("0.01")
 
 
+def _validar_valor(valor: Decimal) -> None:
+    """Rejeita valores negativos e não finitos antes de qualquer cálculo."""
+    if not valor.is_finite() or valor < 0:
+        raise ValueError("O valor deve ser finito e não negativo.")
+
+
 def calcular_juros(valor: Decimal, vencimento: date, hoje: date | None = None) -> Decimal:
     """Calcula os juros de uma conta em atraso (juros simples).
 
@@ -54,6 +60,9 @@ def calcular_juros(valor: Decimal, vencimento: date, hoje: date | None = None) -
         vencimento: data de vencimento da conta.
         hoje: data de referência do cálculo. Se omitida, usa a data atual do
             sistema. Útil para testes com datas fixas.
+
+    Raises:
+        ValueError: se ``valor`` for negativo ou não finito.
 
     Returns:
         Valor dos juros, arredondado para centavos. Retorna ``0.00`` se a
@@ -65,6 +74,7 @@ def calcular_juros(valor: Decimal, vencimento: date, hoje: date | None = None) -
         >>> calcular_juros(Decimal("1000"), date(2026, 10, 5), hoje=date(2026, 9, 30))
         Decimal('0.00')
     """
+    _validar_valor(valor)
     hoje = hoje or date.today()
 
     # A subtração de duas datas resulta em um timedelta; .days dá o número
@@ -102,13 +112,16 @@ def ler_valor(texto: str) -> Decimal:
 
     Raises:
         decimal.InvalidOperation: se o texto não representar um número.
+        ValueError: se o valor for negativo ou não finito.
     """
     texto = texto.strip().replace("R$", "").strip()
     if "," in texto:
         # Formato BR: remove os pontos de milhar e troca a vírgula por ponto,
         # que é o separador que o Decimal entende. "1.234,56" -> "1234.56".
         texto = texto.replace(".", "").replace(",", ".")
-    return Decimal(texto)
+    valor = Decimal(texto)
+    _validar_valor(valor)
+    return valor
 
 
 def brl(valor: Decimal) -> str:
@@ -131,7 +144,11 @@ def main() -> None:
         ValueError: se a data não estiver no formato ``DD/MM/AAAA``.
         decimal.InvalidOperation: se o valor digitado não for um número.
     """
-    valor = ler_valor(input("Valor (ex.: 1500,00): "))
+    try:
+        valor = ler_valor(input("Valor (ex.: 1500,00): "))
+    except ValueError as erro:
+        print(f"\nErro: {erro}")
+        return
     # strptime converte texto em data conforme o formato informado;
     # .date() descarta a parte de horário, ficando só com dia/mês/ano.
     vencimento = datetime.strptime(input("Vencimento (DD/MM/AAAA): ").strip(), "%d/%m/%Y").date()
